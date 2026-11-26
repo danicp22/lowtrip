@@ -1,6 +1,7 @@
 CREATE DATABASE IF NOT EXISTS lowtrip
   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE lowtrip;
+SET NAMES utf8mb4;
 
 -- Planes: Básico (gratis, con límite) y Pro
 CREATE TABLE planes (
@@ -38,8 +39,8 @@ CREATE TABLE preguntas (
   orden INT NOT NULL,
   clave VARCHAR(30) NOT NULL UNIQUE,   -- ej: 'origen', 'presupuesto'
   texto VARCHAR(255) NOT NULL,
-  tipo ENUM('texto','opcion','multiple') NOT NULL,
-  opciones JSON NULL                   -- lista de opciones si las hay
+  tipo ENUM('texto','opcion','multiple','duelo','rango','escala','baraja') NOT NULL,
+  opciones JSON NULL                   -- configuración según el tipo de pregunta
 );
 
 -- Lo que responde el usuario a cada pregunta
