@@ -17,5 +17,6 @@ $planes = conectar()->query('SELECT nombre, precio FROM planes')->fetchAll();
             <li><?= htmlspecialchars($plan['nombre']) ?>: <?= $plan['precio'] ?> €</li>
         <?php endforeach; ?>
     </ul>
+    <p><a href="chat.php">Probar el chat</a></p>
 </body>
 </html>

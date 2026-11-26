@@ -1,0 +1,445 @@
+/* ==========================================================
+   LowTrip · Chat del planificador
+   ========================================================== */
+
+:root {
+    --cielo:  #e7edf8;   /* fondo de la página */
+    --papel:  #ffffff;   /* billete y zona de chat */
+    --tinta:  #16213e;   /* texto principal */
+    --azul:   #2747e6;   /* color de marca, mensajes del usuario */
+    --sol:    #ffc83d;   /* amarillo de billete, selección */
+    --niebla: #eef2fc;   /* mensajes de LowTrip */
+    --gris:   #5d667b;   /* textos secundarios */
+    --linea:  #d6ddec;
+
+    --letra-billete: "Big Shoulders Display", "Arial Narrow", sans-serif;
+    --letra-texto:   "Instrument Sans", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--cielo);
+    color: var(--tinta);
+    font-family: var(--letra-texto);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+button, input { font: inherit; color: inherit; }
+
+:focus-visible {
+    outline: 3px solid var(--azul);
+    outline-offset: 2px;
+}
+
+/* ---------- Cabecera ---------- */
+
+.cabecera {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 20px 24px 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+}
+
+.logo {
+    font-family: var(--letra-billete);
+    font-weight: 800;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--tinta);
+    text-decoration: none;
+}
+
+.lema {
+    margin: 0;
+    color: var(--gris);
+    font-size: 0.95rem;
+}
+
+/* ---------- Distribución general ---------- */
+
+.planificador {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 16px 24px 24px;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+/* ---------- Billete ---------- */
+
+.billete {
+    position: relative;
+    background: var(--papel);
+    border-radius: 18px;
+    box-shadow: 0 1px 0 var(--linea), 0 18px 40px -24px rgba(22, 33, 62, 0.45);
+}
+
+.billete__cuerpo {
+    position: relative;
+    padding: 24px 24px 20px;
+}
+
+.ruta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.ruta__punto {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.ruta__punto--destino { text-align: right; }
+
+.ruta__etiqueta,
+.dato dt {
+    font-size: 0.8rem;
+    color: var(--gris);
+}
+
+.ruta__codigo {
+    font-family: var(--letra-billete);
+    font-weight: 800;
+    font-size: 3.4rem;
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+}
+
+.ruta__punto--destino .ruta__codigo { color: var(--azul); }
+
+.ruta__ciudad {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ruta__avion {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    fill: var(--tinta);
+    transform: rotate(90deg);
+}
+
+.datos {
+    margin: 22px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--linea);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+}
+
+.dato { min-width: 0; }
+.dato--ancho { grid-column: 1 / -1; }
+
+.dato dd {
+    margin: 0;
+    font-family: var(--letra-billete);
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.15;
+    color: var(--linea);
+}
+
+.dato dd.relleno {
+    color: var(--tinta);
+    animation: imprimir 0.35s ease-out;
+}
+
+/* Talón con la línea de corte */
+.billete__talon {
+    position: relative;
+    padding: 18px 24px 22px;
+    border-top: 2px dashed var(--linea);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+/* Las dos muescas redondas del billete */
+.billete__talon::before,
+.billete__talon::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--cielo);
+}
+.billete__talon::before { left: -11px; }
+.billete__talon::after  { right: -11px; }
+
+.talon__progreso {
+    font-size: 0.85rem;
+    color: var(--gris);
+}
+
+.talon__barras {
+    width: 112px;
+    height: 38px;
+    background:
+        repeating-linear-gradient(90deg,
+            var(--tinta) 0 2px, transparent 2px 4px,
+            var(--tinta) 4px 5px, transparent 5px 8px,
+            var(--tinta) 8px 11px, transparent 11px 12px,
+            var(--tinta) 12px 13px, transparent 13px 16px);
+}
+
+/* Sello final */
+.sello {
+    position: absolute;
+    right: 18px;
+    bottom: 14px;
+    padding: 6px 12px;
+    border: 3px solid var(--azul);
+    border-radius: 6px;
+    color: var(--azul);
+    font-family: var(--letra-billete);
+    font-weight: 800;
+    font-size: 1.35rem;
+    line-height: 1;
+    transform: rotate(-9deg);
+    mix-blend-mode: multiply;   /* como la tinta de un sello: deja ver lo que hay debajo */
+    animation: sellar 0.4s cubic-bezier(.2, 1.6, .4, 1);
+}
+.sello[hidden] { display: none; }
+
+/* ---------- Chat ---------- */
+
+.chat {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--papel);
+    border-radius: 18px;
+    box-shadow: 0 1px 0 var(--linea);
+    overflow: hidden;
+}
+
+.chat__mensajes {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 28px 28px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mensaje {
+    max-width: min(78%, 520px);
+    padding: 11px 16px;
+    border-radius: 20px;
+}
+
+.mensaje--bot {
+    align-self: flex-start;
+    background: var(--niebla);
+    border-bottom-left-radius: 6px;
+}
+
+.mensaje--usuario {
+    align-self: flex-end;
+    background: var(--azul);
+    color: #fff;
+    border-bottom-right-radius: 6px;
+}
+
+/* Puntos de "escribiendo..." */
+.escribiendo {
+    align-self: flex-start;
+    display: flex;
+    gap: 5px;
+    padding: 15px 16px;
+    background: var(--niebla);
+    border-radius: 20px;
+    border-bottom-left-radius: 6px;
+}
+
+.escribiendo span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gris);
+    animation: saltito 1s infinite;
+}
+.escribiendo span:nth-child(2) { animation-delay: 0.15s; }
+.escribiendo span:nth-child(3) { animation-delay: 0.3s; }
+
+/* Zona de respuesta */
+.chat__respuesta {
+    padding: 16px 28px;
+    border-top: 1px solid var(--linea);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chat__respuesta:empty { display: none; }
+
+.opcion {
+    padding: 9px 18px;
+    border: 1.5px solid var(--tinta);
+    border-radius: 999px;
+    background: var(--papel);
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.opcion:hover { background: var(--sol); }
+
+.opcion[aria-pressed="true"] {
+    background: var(--sol);
+    border-color: var(--sol);
+    font-weight: 600;
+}
+
+.opcion[aria-pressed="true"]::before { content: "✓ "; }
+
+.boton-principal {
+    padding: 9px 22px;
+    border: none;
+    border-radius: 999px;
+    background: var(--azul);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.boton-principal:disabled {
+    background: var(--linea);
+    color: var(--gris);
+    cursor: not-allowed;
+}
+
+.respuesta-texto {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+}
+
+.respuesta-texto input {
+    flex: 1;
+    min-width: 0;
+    padding: 9px 18px;
+    border: 1.5px solid var(--linea);
+    border-radius: 999px;
+    background: var(--papel);
+}
+
+.respuesta-texto input:focus-visible {
+    outline: none;
+    border-color: var(--azul);
+}
+
+/* Datos que se enviarán a la IA (para la demo) */
+.datos-ia {
+    align-self: stretch;
+    margin-top: 6px;
+    font-size: 0.9rem;
+}
+
+.datos-ia summary {
+    cursor: pointer;
+    color: var(--azul);
+    font-weight: 500;
+}
+
+.datos-ia pre {
+    margin: 10px 0 0;
+    padding: 14px 16px;
+    background: var(--tinta);
+    color: #dfe7ff;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    overflow-x: auto;
+}
+
+.chat__aviso {
+    margin: 0;
+    padding: 0 28px 14px;
+    font-size: 0.78rem;
+    color: var(--gris);
+}
+
+/* ---------- Animaciones ---------- */
+
+@keyframes imprimir {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes sellar {
+    from { opacity: 0; transform: rotate(-9deg) scale(1.6); }
+    to   { opacity: 1; transform: rotate(-9deg) scale(1); }
+}
+
+@keyframes saltito {
+    0%, 60%, 100% { transform: none; opacity: 0.5; }
+    30%           { transform: translateY(-4px); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ---------- Móvil ---------- */
+
+@media (max-width: 760px) {
+    .cabecera { padding: 14px 16px 4px; }
+    .logo { font-size: 1.6rem; }
+
+    .planificador {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 12px;
+        padding: 10px 16px 16px;
+    }
+
+    /* En el móvil el billete se queda en una franja: ruta y progreso */
+    .billete__cuerpo { padding: 14px 18px 12px; }
+    .ruta__codigo { font-size: 2.3rem; }
+    .datos { display: none; }
+
+    .billete__talon { padding: 10px 18px 12px; }
+    .talon__barras { width: 72px; height: 24px; }
+
+    .sello {
+        font-size: 1.05rem;
+        right: 50%;
+        bottom: 50%;
+        transform: translate(50%, 50%) rotate(-9deg);
+        animation: none;
+    }
+
+    .chat__mensajes { padding: 18px 16px 10px; }
+    .chat__respuesta { padding: 12px 16px; }
+    .chat__aviso { padding: 0 16px 12px; }
+    .mensaje { max-width: 88%; }
+}
