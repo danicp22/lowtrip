@@ -1,0 +1,502 @@
+/* ==========================================================
+   LowTrip · Portada
+   (los colores y tipografías están en comun.css)
+   ========================================================== */
+
+html { scroll-behavior: smooth; }
+
+.menu,
+main,
+.pie {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+/* ---------- Botones ---------- */
+
+.boton {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.boton--azul {
+    background: var(--azul);
+    color: #fff;
+}
+
+.boton--azul:hover { background: var(--tinta); }
+
+.boton--grande {
+    padding: 14px 30px;
+    font-size: 1.1rem;
+}
+
+.boton--apagado {
+    border: 1.5px dashed currentColor;
+    opacity: 0.75;
+    cursor: default;
+}
+
+/* ---------- Menú ---------- */
+
+.menu {
+    padding-top: 22px;
+    padding-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.menu__enlaces {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.menu__enlaces a:not(.boton) {
+    color: var(--tinta);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.menu__enlaces a:not(.boton):hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* ---------- Portada ---------- */
+
+.portada {
+    padding: 48px 0 96px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    gap: 56px;
+}
+
+.portada h1 {
+    margin: 0;
+    font-family: var(--letra-billete);
+    font-weight: 800;
+    font-size: clamp(3.2rem, 7vw, 5.6rem);
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+}
+
+.portada__entradilla {
+    max-width: 30em;
+    margin: 24px 0 32px;
+    font-size: 1.15rem;
+    color: var(--gris);
+}
+
+.portada__acciones {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.portada__nota {
+    color: var(--gris);
+    font-size: 0.95rem;
+}
+
+/* ---------- Billete de ejemplo ---------- */
+
+.billete-ejemplo {
+    background: var(--papel);
+    border-radius: 22px;
+    box-shadow: 0 1px 0 var(--linea), 0 30px 60px -30px rgba(22, 33, 62, 0.5);
+    transform: rotate(2deg);
+}
+
+.billete-ejemplo__cuerpo { padding: 30px 30px 26px; }
+
+.billete-ejemplo__ruta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.billete-ejemplo__ruta > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.billete-ejemplo__destino { text-align: right; }
+
+.etiqueta,
+.billete-ejemplo__datos dt {
+    font-size: 0.8rem;
+    color: var(--gris);
+}
+
+.codigo {
+    font-family: var(--letra-billete);
+    font-weight: 800;
+    font-size: 4.4rem;
+    line-height: 0.95;
+}
+
+.codigo--destino {
+    display: flex;
+    justify-content: flex-end;
+    gap: 3px;
+    perspective: 400px;
+}
+
+/* Cada letra del destino es una plaquita del panel de salidas */
+.letra {
+    display: inline-block;
+    min-width: 0.62em;
+    padding: 0 2px;
+    border-radius: 6px;
+    background: var(--tinta);
+    color: var(--sol);
+    text-align: center;
+}
+
+.letra--girando { animation: girar 0.36s ease-in-out; }
+
+.ciudad { font-size: 0.95rem; }
+
+.billete-ejemplo__avion {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    fill: var(--tinta);
+    transform: rotate(90deg);
+}
+
+.billete-ejemplo__datos {
+    margin: 24px 0 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--linea);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;
+}
+
+.billete-ejemplo__datos dd {
+    margin: 0;
+    font-family: var(--letra-billete);
+    font-weight: 600;
+    font-size: 1.35rem;
+    line-height: 1.1;
+}
+
+.billete-ejemplo__talon {
+    position: relative;
+    padding: 18px 30px 22px;
+    border-top: 2px dashed var(--linea);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    color: var(--gris);
+    font-size: 0.9rem;
+}
+
+/* Muescas del billete: el talón y las tarjetas de los planes las comparten */
+.billete-ejemplo__talon::before,
+.billete-ejemplo__talon::after,
+.plan__talon::before,
+.plan__talon::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--cielo);
+}
+
+.billete-ejemplo__talon::before,
+.plan__talon::before { left: -11px; }
+
+.billete-ejemplo__talon::after,
+.plan__talon::after { right: -11px; }
+
+.barras {
+    width: 112px;
+    height: 36px;
+    background:
+        repeating-linear-gradient(90deg,
+            var(--tinta) 0 2px, transparent 2px 4px,
+            var(--tinta) 4px 5px, transparent 5px 8px,
+            var(--tinta) 8px 11px, transparent 11px 12px,
+            var(--tinta) 12px 13px, transparent 13px 16px);
+}
+
+/* ---------- Secciones ---------- */
+
+.seccion { padding: 24px 0 96px; }
+
+.seccion h2 {
+    margin: 0 0 40px;
+    font-family: var(--letra-billete);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    line-height: 1;
+}
+
+/* Cómo funciona: tres paradas unidas por una línea de puntos */
+.trayecto {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    position: relative;
+}
+
+.trayecto::before {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 26px;
+    right: calc((100% - 80px) / 3 - 26px);   /* termina en la última parada */
+    height: 4px;
+    background: radial-gradient(circle, var(--gris) 1.5px, transparent 2px) left center / 10px 4px repeat-x;
+}
+
+.parada { position: relative; }
+
+.parada__marca {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 20px;
+    border: 2px solid var(--tinta);
+    border-radius: 50%;
+    background: var(--cielo);
+    display: grid;
+    place-items: center;
+    font-family: var(--letra-billete);
+    font-weight: 800;
+    font-size: 1.6rem;
+}
+
+.parada__marca--final {
+    background: var(--sol);
+}
+
+.parada__marca svg {
+    width: 26px;
+    height: 26px;
+    fill: var(--tinta);
+    transform: rotate(90deg);
+}
+
+.parada h3 {
+    margin: 0 0 8px;
+    font-size: 1.25rem;
+}
+
+.parada p {
+    max-width: 28em;
+    margin: 0;
+    color: var(--gris);
+}
+
+/* Planes: cada uno es un billete con su talón */
+.planes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 420px));
+    gap: 32px;
+}
+
+.plan {
+    background: var(--papel);
+    border-radius: 22px;
+    display: flex;
+    flex-direction: column;
+}
+
+.plan__cuerpo {
+    flex: 1;
+    padding: 30px 30px 24px;
+}
+
+.plan__nombre {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.plan__precio {
+    margin: 4px 0 20px;
+    font-family: var(--letra-billete);
+    font-weight: 800;
+    font-size: 3.6rem;
+    line-height: 1;
+}
+
+.plan__precio small {
+    font-family: var(--letra-texto);
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--gris);
+}
+
+.plan__ventajas {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+}
+
+.plan__ventajas li {
+    padding-left: 26px;
+    position: relative;
+}
+
+/* Marca de cada ventaja: un pequeño círculo como los sellos del billete */
+.plan__ventajas li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.35em;
+    width: 12px;
+    height: 12px;
+    border: 2.5px solid var(--azul);
+    border-radius: 50%;
+}
+
+.plan__talon {
+    position: relative;
+    padding: 20px 30px 24px;
+    border-top: 2px dashed var(--linea);
+}
+
+/* El plan Pro va en tinta oscura con el precio en amarillo */
+.plan--pro {
+    background: var(--tinta);
+    color: #fff;
+}
+
+.plan--pro .plan__precio { color: var(--sol); }
+.plan--pro .plan__precio small { color: #b7c0d8; }
+.plan--pro .plan__ventajas li::before { border-color: var(--sol); }
+.plan--pro .plan__talon { border-top-color: #3a4566; }
+
+.aviso { color: var(--gris); }
+
+/* ---------- Pie ---------- */
+
+.pie {
+    padding-top: 32px;
+    padding-bottom: 48px;
+    border-top: 1px solid var(--linea);
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    color: var(--gris);
+    font-size: 0.9rem;
+}
+
+.pie .logo { font-size: 1.5rem; }
+.pie p { margin: 0; max-width: 60em; }
+
+/* ---------- Animaciones ---------- */
+
+@keyframes girar {
+    0%   { transform: rotateX(0); }
+    50%  { transform: rotateX(90deg); }
+    100% { transform: rotateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ---------- Tablet y móvil ---------- */
+
+@media (max-width: 900px) {
+    .portada {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        padding-bottom: 72px;
+    }
+
+    .billete-ejemplo {
+        max-width: 460px;
+        transform: rotate(1deg);
+    }
+
+    .trayecto {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    /* en vertical, cada parada dibuja su tramo de línea hasta la siguiente */
+    .trayecto::before { display: none; }
+
+    .parada:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        left: 24px;
+        top: 56px;
+        bottom: -24px;
+        width: 4px;
+        background: radial-gradient(circle, var(--gris) 1.5px, transparent 2px) center top / 4px 10px repeat-y;
+    }
+
+    .parada {
+        padding-left: 76px;
+        min-height: 52px;
+    }
+
+    .parada__marca {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .planes { grid-template-columns: minmax(0, 460px); }
+}
+
+@media (max-width: 600px) {
+    .menu,
+    main,
+    .pie {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .menu__enlaces a:not(.boton) { display: none; }
+
+    .portada { padding-top: 24px; }
+    .portada__entradilla { font-size: 1.05rem; }
+
+    .billete-ejemplo__cuerpo { padding: 22px 20px 20px; }
+    .billete-ejemplo__talon { padding: 14px 20px 18px; }
+    .codigo { font-size: 3.2rem; }
+    .billete-ejemplo__datos dd { font-size: 1.15rem; }
+    .barras { width: 80px; height: 26px; }
+
+    .plan__cuerpo { padding: 24px 22px 20px; }
+    .plan__talon { padding: 16px 22px 20px; }
+    .plan__precio { font-size: 3rem; }
+
+    .pie {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

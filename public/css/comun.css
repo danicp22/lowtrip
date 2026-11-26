@@ -1,0 +1,44 @@
+/* ==========================================================
+   LowTrip · Estilos comunes a todas las páginas
+   ========================================================== */
+
+:root {
+    --cielo:  #e7edf8;   /* fondo de la página */
+    --papel:  #ffffff;   /* billetes y tarjetas */
+    --tinta:  #16213e;   /* texto principal */
+    --azul:   #2747e6;   /* color de marca */
+    --sol:    #ffc83d;   /* amarillo de billete, destacados */
+    --niebla: #eef2fc;   /* fondos suaves */
+    --gris:   #5d667b;   /* textos secundarios */
+    --linea:  #d6ddec;
+
+    --letra-billete: "Big Shoulders Display", "Arial Narrow", sans-serif;
+    --letra-texto:   "Instrument Sans", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--cielo);
+    color: var(--tinta);
+    font-family: var(--letra-texto);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+button, input { font: inherit; color: inherit; }
+
+:focus-visible {
+    outline: 3px solid var(--azul);
+    outline-offset: 2px;
+}
+
+.logo {
+    font-family: var(--letra-billete);
+    font-weight: 800;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--tinta);
+    text-decoration: none;
+}
